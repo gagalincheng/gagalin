@@ -5,7 +5,6 @@
 */
 
 (function($) {
-
 	var settings = {
 		
 		// Parallax background effect?
@@ -105,22 +104,54 @@
 
 		// Main Sections: Two.
 		
-			// Lightbox gallery.
-				$('#two').poptrox({
-					caption: function($a) { return $a.next('h3').text(); },
-					overlayColor: '#2c2c2c',
-					overlayOpacity: 0.85,
-					popupCloserText: '',
-					popupLoaderText: '',
-					selector: '.work-item a',
-					usePopupCaption: true,
-					usePopupDefaultStyling: false,
-					usePopupEasyClose: false,
-					usePopupNav: true,
-					windowMargin: (skel.isActive('small') ? 0 : 50)
-				});
-				// $('#show').sliphover();
-
+		// Lightbox gallery.
+		// $('#two').poptrox({
+		// 	caption: function($a) { return $a.next('h3').text(); },
+		// 	overlayColor: '#2c2c2c',
+		// 	overlayOpacity: 0.85,
+		// 	popupCloserText: '',
+		// 	popupLoaderText: '',
+		// 	selector: '.work-item a',
+		// 	usePopupCaption: true,
+		// 	usePopupDefaultStyling: false,
+		// 	usePopupEasyClose: false,
+		// 	usePopupNav: true,
+		// 	windowMargin: (skel.isActive('small') ? 0 : 50)
+		// });
+		//加载文章
+		$.get('http://127.0.0.1:8081/listArticles',function(data){
+			var content = "";
+			for(var i in data){
+				var date = data[i].date.substring(0,10);
+				content += "<section id='"+data[i].id+"' data-date='"+date.replace('-','').substring(0,6)+"' class='article'>";
+				content +=	"<header>";
+				content +=	"<h3>"+data[i].name+"</h3>";
+				content +=	"<p>";
+				content +=	data[i].intro;
+				content +=	"</p>";
+				content +=	"<span>"+date+" 发布</span>";
+				content +=	"</header>";
+				content +=	"<img class='article-image' src='images/cover/"+data[i].cover+"' />";
+				content +=	"</section>";
+			}
+			$('#main').append(content);
+		});
+		//点击文章
+		$('div').delegate('.article','click',function(){
+			var options = {
+				id: 'top-progress-bar',
+				color: '#F44336',
+				height: '2px',
+				duration: 2
+			}
+			var progressBar = new ToProgress(options);
+			progressBar.increase(80);
+			var url = 'articles/201703/'+$(this).attr('id')+'.html';
+			$.get(url,function(data){
+				$('#main').html(data);
+				progressBar.finish();
+			});
+		});
 	});
 
 })(jQuery);
