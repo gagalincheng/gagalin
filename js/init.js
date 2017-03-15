@@ -119,7 +119,7 @@
 		// 	windowMargin: (skel.isActive('small') ? 0 : 50)
 		// });
 		//加载文章
-		$.get('http://127.0.0.1:8081/listArticles',function(data){
+		$.get('http://104.224.160.97:8081/listArticles',function(data){
 			var content = "";
 			for(var i in data){
 				var date = data[i].date.substring(0,10);
