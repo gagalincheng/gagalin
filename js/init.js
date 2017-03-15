@@ -119,23 +119,35 @@
 		// 	windowMargin: (skel.isActive('small') ? 0 : 50)
 		// });
 		//加载文章
-		$.get('http://104.224.160.97:8081/listArticles',function(data){
-			var content = "";
-			for(var i in data){
-				var date = data[i].date.substring(0,10);
-				content += "<section id='"+data[i].id+"' data-date='"+date.replace('-','').substring(0,6)+"' class='article'>";
-				content +=	"<header>";
-				content +=	"<h3>"+data[i].name+"</h3>";
-				content +=	"<p>";
-				content +=	data[i].intro;
-				content +=	"</p>";
-				content +=	"<span>"+date+" 发布</span>";
-				content +=	"</header>";
-				content +=	"<img class='article-image' src='images/cover/"+data[i].cover+"' />";
-				content +=	"</section>";
+		var getArticles = function(){
+			var options = {
+				id: 'top-progress-bar',
+				color: '#F44336',
+				height: '2px',
+				duration: 2
 			}
-			$('#main').append(content);
-		});
+			var progressBar = new ToProgress(options);
+			progressBar.increase(80);
+			$.get('http://104.224.160.97:8081/listArticles',function(data){
+				var content = "";
+				for(var i in data){
+					var date = data[i].date.substring(0,10);
+					content += "<section id='"+data[i].id+"' data-date='"+date.replace('-','').substring(0,6)+"' class='article'>";
+					content +=	"<header>";
+					content +=	"<h3>"+data[i].name+"</h3>";
+					content +=	"<p>";
+					content +=	data[i].intro;
+					content +=	"</p>";
+					content +=	"<span>"+date+" 发布</span>";
+					content +=	"</header>";
+					content +=	"<img class='article-image' src='images/cover/"+data[i].cover+"' />";
+					content +=	"</section>";
+				}
+				$('#main').append(content);
+				progressBar.finish();
+			});
+		}
+		getArticles();
 		//点击文章
 		$('div').delegate('.article','click',function(){
 			var options = {
@@ -152,6 +164,10 @@
 				progressBar.finish();
 			});
 		});
+		$('div').delegate('.button-reback','click',function(){
+			$('#main').empty();
+			getArticles();
+		})
 	});
 
 })(jQuery);
