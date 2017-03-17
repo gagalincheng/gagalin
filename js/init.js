@@ -138,7 +138,7 @@
 					content +=	"<p>";
 					content +=	data[i].intro;
 					content +=	"</p>";
-					content +=	"<span>"+date+" 发布</span>";
+					content +=	"<span>"+date+" 发布 | 浏览 "+data[i].pv+" 次</span>";
 					content +=	"</header>";
 					content +=	"<img class='cover' src='images/cover/"+data[i].cover+"' />";
 					content +=	"</section>";
@@ -156,13 +156,20 @@
 				height: '2px',
 				duration: 2
 			}
+			var id = $(this).attr('id');
 			var progressBar = new ToProgress(options);
 			progressBar.increase(80);
-			var url = 'articles/201703/'+$(this).attr('id')+'.html';
+			var url = 'articles/201703/'+id+'.html';
 			$.get(url,function(data){
 				$('#main').html(data);
+				$.get('http://104.224.160.97:8081/addArticlePv/'+id,function(data){
+					console.log(data);
+					$('#article-pv').text(data[0].pv);
+				});
 				progressBar.finish();
 			});
+			//pv+1
+
 		});
 		$('div').delegate('.button-reback','click',function(){
 			$('#main').empty();

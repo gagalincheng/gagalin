@@ -36,7 +36,19 @@ app.get('/listCities',function(req,res){
 		res.send(cities);
 	});
 });
-
+app.get('/addArticlePv/:id',function(req,res){			//增加文章浏览量
+	/**设置响应头允许ajax跨域访问**/
+	res.setHeader("Access-Control-Allow-Origin","*");
+	/*星号表示所有的异域请求都可以接受，*/
+	res.setHeader("Access-Control-Allow-Methods","GET,POST");
+	var updatesql = 'update ga_article set pv=pv+1 where id='+req.params.id;
+	connection.query(updatesql,function (err, result) {
+		var selectsql = 'select * from ga_article where id='+req.params.id;
+		connection.query(selectsql,function (err, result) {
+			res.send(result);
+		});
+	});
+});
 var server = app.listen(8081,function(){
 	var host = server.address().address;
 	var port = server.address().port;
