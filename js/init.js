@@ -140,7 +140,7 @@
 					content +=	"</p>";
 					content +=	"<span>"+date+" 发布</span>";
 					content +=	"</header>";
-					content +=	"<img class='article-image' src='images/cover/"+data[i].cover+"' />";
+					content +=	"<img class='cover' src='images/cover/"+data[i].cover+"' />";
 					content +=	"</section>";
 				}
 				$('#main').append(content);

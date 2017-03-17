@@ -1102,7 +1102,7 @@
             opacity: 1;
             transition-delay: .2s;
         }
-		#main .article-image {
+		#main .cover {
 			width:30%;
 			float:right;
 			border-radius: 2px;

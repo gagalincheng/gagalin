@@ -79,10 +79,13 @@
 		width: 100%;
 		clear: both;
 	}
-	#main .article-image {
+	#main .cover {
 		width:100%;
 		margin: 1em 0 2em 0;
 	}
 	#main header{
+		width: 100%;
+	}
+	#main .article-img{
 		width: 100%;
 	}
