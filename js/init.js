@@ -29,11 +29,14 @@
 	});
 
 	$(function() {
-		
+		$("#header").load("header.html");
+		//$("#footer").load("footer.html");
+
 		var $window = $(window),
 			$body = $('body'),
 			$header = $('#header');
 
+		//$header.load("header.html");
 		// Disable animations/transitions until the page has loaded.
 			$body.addClass('is-loading');
 			

@@ -79,9 +79,13 @@
 		width: 100%;
 		clear: both;
 	}
+	#main > section {
+		height:26em;
+	}
 	#main .cover {
 		width:100%;
 		margin: 1em 0 2em 0;
+		max-height: 24em;
 	}
 	#main header{
 		width: 100%;

@@ -1088,8 +1088,8 @@
     }
 
 		#main > section {
-			/*border-top: solid 2px #efefef;*/
-			height:10em;
+			border-bottom: solid 2px #efefef;
+			height:10.5em;
 			cursor: pointer;
 			margin-top: 1em;
             transition: opacity 1s ease-out;
@@ -1106,6 +1106,7 @@
 			width:30%;
 			float:right;
 			border-radius: 2px;
+			max-height:10em;
 		}
 		#main h2{
 			margin-top: 1em;
