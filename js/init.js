@@ -134,7 +134,7 @@
 			$.get('http://104.224.160.97:8081/listArticles',function(data){
 				var content = "";
 				for(var i in data){
-					var date = data[i].date.substring(0,10);
+					var date = data[i].create_time.substring(0,10);
 					content += "<section id='"+data[i].id+"' data-date='"+date.replace('-','').substring(0,6)+"' class='article'>";
 					content +=	"<header>";
 					content +=	"<h3>"+data[i].name+"</h3>";
