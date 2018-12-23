@@ -1,0 +1,33 @@
+<hr>
+<p>title: 关于mp3的时长问题
+tags: </p>
+<h2 id="notebook-js">notebook: JS</h2>
+<h1 id="-">一个奇怪的问题</h1>
+<p>最近在处理h5中的音频，发现一个奇怪的问题
+在IE浏览器中读取音频的长度，总是与实际长度不同</p>
+<ul>
+<li>ie11中读取到音频的长度，总是会比实际的短几秒</li>
+<li>ie10更甚，只显示实际长度的一半</li>
+</ul>
+<h1 id="-">求解</h1>
+<p>一开始在IE10上发现这个问题，只以为是ie上奇怪的标准导致，没有去深究，使用后台同学所返回的长度数据代之，但后面遇到进度条越往后越点击不动的时候，可达鸭眉头一紧发现事情并没有那么简单</p>
+<p>下面是两段mp3，第一段时长为47s，第二段时长为16s（在chrome中显示），其中第一段在IE和chrome中都显示正常，第二段则在IE10中长度被腰斩，我们用MP3tag打开看看具体信息</p>
+<p><img src="https://store-g1.seewo.com/school_test%2Fa5d4af48d77b40e5982d4a35710a22dc%2F1" alt="cmd-markdown-logo"></p>
+<p>可以看到它们的区别是在于codec，那好，来看看MPEG 1 LayerIII和MPEG 2.5 LayerIII这两个有啥区别</p>
+<p>查了一下MPEG帧的采样数索引表，可以看到MPEG 2.5 LayerIII的采样数刚好是MPEG 1 LayerIII的一半</p>
+<p><img src="https://store-g1.seewo.com/school_test%2Fa5d4af48d77b40e5982d4a35710a22dc%2F0" alt="cmd-markdown-logo"></p>
+<p>这不巧了吗，但要搞懂这个问题，首先还是得先了解一下mp3时长的计算规则</p>
+<p>对于mp3文件，其实并没有所谓时长的属性，因此需要通过一定的计算规则去计算，这里面就涉及到两种计算规则</p>
+<h4 id="-">第一种：使用固定的比特率去计算</h4>
+<p>这种规则适用于CBR（固定比特率）形式的mp3文件，公式为</p>
+<pre><code>duration
+= 文件大小（字节）× 8比特/字节 ÷（比特率(千比特/秒) ×1000）</code></pre><h4 id="-">第一种：使用采样率去计算</h4>
+<p>这种规则同时适用于CBR和VBR（变化比特率），公式为</p>
+<pre><code>duration
+= 每一帧的时长 × 总的帧数
+= (每一帧的采样个数 ×（1 / 每一帧的采样频率））×（ 文件大小（字节）× 8比特/字节 ÷ （ 4 + [每个帧的时长 × 比特率（千比特/秒）× 1000] ))</code></pre><p>可以看出，当一个mp3文件的采样频率、大小和比特率确定的情况下，音频的时长是跟每一帧的采样个数成正比的，而根据上面，可以确定，在其他变量相同的情况下，MPEG 1 LayerIII格式的文件时长会是MPEG 2.5 LayerIII格式的两倍。</p>
+<h1 id="-">总结</h1>
+<p>目前无法得知ie,chrome和其他浏览器针对mp3音频的解析是根据怎样的算法去计算得出，但可以在处理音频的环节中通过控制codec去维系浏览器的计算结果。</p>
+<hr>
+<h4 id="https-www-crifan-com-files-doc-docbook-mpeg_vbr-release-htmls-ch04_xing_vbri-html-eq-cbr_duration"><a href="https://www.crifan.com/files/doc/docbook/mpeg_vbr/release/htmls/ch04_xing_vbri.html#eq.cbr_duration">https://www.crifan.com/files/doc/docbook/mpeg_vbr/release/htmls/ch04_xing_vbri.html#eq.cbr_duration</a></h4>
+<h4 id="https-www-crifan-com-files-doc-docbook-mpeg_vbr-release-htmls-ch03s02-html"><a href="https://www.crifan.com/files/doc/docbook/mpeg_vbr/release/htmls/ch03s02.html">https://www.crifan.com/files/doc/docbook/mpeg_vbr/release/htmls/ch03s02.html</a></h4>

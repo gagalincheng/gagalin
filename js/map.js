@@ -1,7 +1,7 @@
 /**
  * Created by gagalin on 2017/3/11.
  */
-$.get('http://104.224.160.97:8081/listCities',function(data){
+$.get('http://127.0.0.1:8081/listCities',function(data){
     console.log(data);
     var geoCoordMap = {
         '延边朝鲜族自治州':[129.52,42.93],

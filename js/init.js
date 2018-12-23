@@ -131,7 +131,7 @@
 			}
 			var progressBar = new ToProgress(options);
 			progressBar.increase(80);
-			$.get('http://104.224.160.97:8081/listArticles',function(data){
+			$.get('http://127.0.0.1:8081/listArticles',function(data){
 				var content = "";
 				for(var i in data){
 					var date = data[i].create_time.substring(0,10);
@@ -165,7 +165,7 @@
 			var url = 'articles/201703/'+id+'.html';
 			$.get(url,function(data){
 				$('#main').html(data);
-				$.get('http://104.224.160.97:8081/addArticlePv/'+id,function(data){
+				$.get('http://127.0.0.1:8081/addArticlePv/'+id,function(data){
 					console.log(data);
 					$('#article-pv').text(data[0].pv);
 				});

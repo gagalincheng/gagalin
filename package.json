@@ -1,0 +1,25 @@
+{
+  "name": "gagalin",
+  "version": "2.0.0",
+  "description": "blog",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "build": "node server/build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gagalincheng/gagalin.git"
+  },
+  "author": "gagalincheng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gagalincheng/gagalin/issues"
+  },
+  "homepage": "https://github.com/gagalincheng/gagalin#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "marked": "^0.5.2",
+    "mysql": "^2.16.0"
+  }
+}
